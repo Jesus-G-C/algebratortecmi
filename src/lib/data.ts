@@ -136,13 +136,20 @@ export async function submitAttempt(input: {
   mode: "practice" | "transfer" | "independent";
   reasoning?: string | null;
 }) {
-  const { data, error } = await supabase.rpc("submit_attempt", {
+  const args: {
+    p_exercise_id: string;
+    p_answer: string;
+    p_assistance: number;
+    p_mode: string;
+    p_reasoning?: string;
+  } = {
     p_exercise_id: input.exerciseId,
     p_answer: input.answer,
     p_assistance: input.assistance,
     p_mode: input.mode,
-    p_reasoning: input.reasoning ?? undefined,
-  });
+  };
+  if (input.reasoning) args.p_reasoning = input.reasoning;
+  const { data, error } = await supabase.rpc("submit_attempt", args);
   if (error) throw error;
   return data as unknown as AttemptResult;
 }
