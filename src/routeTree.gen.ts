@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
+import { Route as AuthenticatedLeccionLessonIdRouteImport } from './routes/_authenticated/leccion.$lessonId'
 import { Route as AuthenticatedRutaCourseIdRouteImport } from './routes/_authenticated/ruta.$courseId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -34,6 +35,12 @@ const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
   path: '/panel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLeccionLessonIdRoute =
+  AuthenticatedLeccionLessonIdRouteImport.update({
+    id: '/leccion/$lessonId',
+    path: '/leccion/$lessonId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRutaCourseIdRoute =
   AuthenticatedRutaCourseIdRouteImport.update({
     id: '/ruta/$courseId',
@@ -45,12 +52,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRoutesById {
@@ -59,19 +68,21 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
+  '/_authenticated/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/_authenticated/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/panel' | '/ruta/$courseId'
+  fullPaths: '/' | '/auth' | '/panel' | '/leccion/$lessonId' | '/ruta/$courseId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/panel' | '/ruta/$courseId'
+  to: '/' | '/auth' | '/panel' | '/leccion/$lessonId' | '/ruta/$courseId'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/panel'
+    | '/_authenticated/leccion/$lessonId'
     | '/_authenticated/ruta/$courseId'
   fileRoutesById: FileRoutesById
 }
@@ -111,6 +122,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/leccion/$lessonId': {
+      id: '/_authenticated/leccion/$lessonId'
+      path: '/leccion/$lessonId'
+      fullPath: '/leccion/$lessonId'
+      preLoaderRoute: typeof AuthenticatedLeccionLessonIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ruta/$courseId': {
       id: '/_authenticated/ruta/$courseId'
       path: '/ruta/$courseId'
@@ -123,11 +141,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
+  AuthenticatedLeccionLessonIdRoute: typeof AuthenticatedLeccionLessonIdRoute
   AuthenticatedRutaCourseIdRoute: typeof AuthenticatedRutaCourseIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
+  AuthenticatedLeccionLessonIdRoute: AuthenticatedLeccionLessonIdRoute,
   AuthenticatedRutaCourseIdRoute: AuthenticatedRutaCourseIdRoute,
 }
 
