@@ -14,16 +14,343 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      achievements: {
+        Row: {
+          code: string
+          description: string
+          id: string
+          name: string
+          requirement: string
+        }
+        Insert: {
+          code: string
+          description: string
+          id?: string
+          name: string
+          requirement: string
+        }
+        Update: {
+          code?: string
+          description?: string
+          id?: string
+          name?: string
+          requirement?: string
+        }
+        Relationships: []
+      }
+      courses: {
+        Row: {
+          description: string
+          id: string
+          level: string
+          min_level: number
+          position: number
+          symbol: string
+          title: string
+        }
+        Insert: {
+          description: string
+          id?: string
+          level: string
+          min_level?: number
+          position?: number
+          symbol?: string
+          title: string
+        }
+        Update: {
+          description?: string
+          id?: string
+          level?: string
+          min_level?: number
+          position?: number
+          symbol?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      exercise_attempts: {
+        Row: {
+          answer: string | null
+          assistance_level: number
+          attempt_number: number
+          correct: boolean
+          created_at: string
+          exercise_id: string
+          id: string
+          mode: string
+          reasoning: string | null
+          user_id: string
+        }
+        Insert: {
+          answer?: string | null
+          assistance_level?: number
+          attempt_number?: number
+          correct?: boolean
+          created_at?: string
+          exercise_id: string
+          id?: string
+          mode?: string
+          reasoning?: string | null
+          user_id: string
+        }
+        Update: {
+          answer?: string | null
+          assistance_level?: number
+          attempt_number?: number
+          correct?: boolean
+          created_at?: string
+          exercise_id?: string
+          id?: string
+          mode?: string
+          reasoning?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercise_attempts_exercise_id_fkey"
+            columns: ["exercise_id"]
+            isOneToOne: false
+            referencedRelation: "exercises"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exercises: {
+        Row: {
+          answer: string
+          ask_reasoning: boolean
+          concept: string
+          created_at: string
+          diagnostic: string | null
+          difficulty: string
+          equation: string | null
+          hints: string[]
+          id: string
+          independent: boolean
+          lesson_id: string
+          position: number
+          problem: string
+          title: string
+          transfer_answer: string | null
+          transfer_problem: string | null
+          xp: number
+        }
+        Insert: {
+          answer: string
+          ask_reasoning?: boolean
+          concept: string
+          created_at?: string
+          diagnostic?: string | null
+          difficulty?: string
+          equation?: string | null
+          hints?: string[]
+          id?: string
+          independent?: boolean
+          lesson_id: string
+          position?: number
+          problem: string
+          title: string
+          transfer_answer?: string | null
+          transfer_problem?: string | null
+          xp?: number
+        }
+        Update: {
+          answer?: string
+          ask_reasoning?: boolean
+          concept?: string
+          created_at?: string
+          diagnostic?: string | null
+          difficulty?: string
+          equation?: string | null
+          hints?: string[]
+          id?: string
+          independent?: boolean
+          lesson_id?: string
+          position?: number
+          problem?: string
+          title?: string
+          transfer_answer?: string | null
+          transfer_problem?: string | null
+          xp?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lessons: {
+        Row: {
+          concept: string
+          course_id: string
+          description: string
+          id: string
+          position: number
+          title: string
+        }
+        Insert: {
+          concept: string
+          course_id: string
+          description: string
+          id?: string
+          position?: number
+          title: string
+        }
+        Update: {
+          concept?: string
+          course_id?: string
+          description?: string
+          id?: string
+          position?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lessons_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          last_active_date: string | null
+          level: number
+          name: string
+          streak: number
+          xp: number
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          last_active_date?: string | null
+          level?: number
+          name?: string
+          streak?: number
+          xp?: number
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_active_date?: string | null
+          level?: number
+          name?: string
+          streak?: number
+          xp?: number
+        }
+        Relationships: []
+      }
+      progress: {
+        Row: {
+          completion: number
+          id: string
+          independent_passed: boolean
+          lesson_id: string
+          mastery: number
+          updated_at: string
+          user_id: string
+          xp_earned: number
+        }
+        Insert: {
+          completion?: number
+          id?: string
+          independent_passed?: boolean
+          lesson_id: string
+          mastery?: number
+          updated_at?: string
+          user_id: string
+          xp_earned?: number
+        }
+        Update: {
+          completion?: number
+          id?: string
+          independent_passed?: boolean
+          lesson_id?: string
+          mastery?: number
+          updated_at?: string
+          user_id?: string
+          xp_earned?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "progress_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          earned_at: string
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          earned_at?: string
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          earned_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +477,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "admin"],
+    },
   },
 } as const
