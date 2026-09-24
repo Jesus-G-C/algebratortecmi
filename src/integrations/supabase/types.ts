@@ -341,12 +341,57 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_metrics: { Args: never; Returns: Json }
+      grant_achievement: {
+        Args: { _code: string; _user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      lesson_exercises: {
+        Args: { p_lesson_id: string }
+        Returns: {
+          ask_reasoning: boolean
+          concept: string
+          difficulty: string
+          equation: string
+          hints: string[]
+          id: string
+          independent: boolean
+          lesson_id: string
+          order_index: number
+          problem: string
+          title: string
+          transfer_problem: string
+          xp: number
+        }[]
+      }
+      level_for_xp: { Args: { _xp: number }; Returns: number }
+      norm_answer: { Args: { _a: string }; Returns: string }
+      retrieval_exercise: {
+        Args: never
+        Returns: {
+          concept: string
+          id: string
+          lesson_id: string
+          problem: string
+          title: string
+        }[]
+      }
+      submit_attempt: {
+        Args: {
+          p_answer: string
+          p_assistance?: number
+          p_exercise_id: string
+          p_mode?: string
+          p_reasoning?: string
+        }
+        Returns: Json
       }
     }
     Enums: {
