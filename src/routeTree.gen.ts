@@ -18,6 +18,8 @@ import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as AuthenticatedProgresoRouteImport } from './routes/_authenticated/progreso'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminEjerciciosRouteImport } from './routes/_authenticated/admin.ejercicios'
+import { Route as AuthenticatedAdminLeccionesRouteImport } from './routes/_authenticated/admin.lecciones'
 import { Route as AuthenticatedEjercicioExerciseIdRouteImport } from './routes/_authenticated/ejercicio.$exerciseId'
 import { Route as AuthenticatedLeccionLessonIdRouteImport } from './routes/_authenticated/leccion.$lessonId'
 import { Route as AuthenticatedRetoExerciseIdRouteImport } from './routes/_authenticated/reto.$exerciseId'
@@ -67,6 +69,18 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminEjerciciosRoute =
+  AuthenticatedAdminEjerciciosRouteImport.update({
+    id: '/ejercicios',
+    path: '/ejercicios',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminLeccionesRoute =
+  AuthenticatedAdminLeccionesRouteImport.update({
+    id: '/lecciones',
+    path: '/lecciones',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedEjercicioExerciseIdRoute =
   AuthenticatedEjercicioExerciseIdRouteImport.update({
     id: '/ejercicio/$exerciseId',
@@ -100,6 +114,8 @@ export interface FileRoutesByFullPath {
   '/panel': typeof AuthenticatedPanelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/progreso': typeof AuthenticatedProgresoRoute
+  '/admin/ejercicios': typeof AuthenticatedAdminEjerciciosRoute
+  '/admin/lecciones': typeof AuthenticatedAdminLeccionesRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
@@ -113,6 +129,8 @@ export interface FileRoutesByTo {
   '/panel': typeof AuthenticatedPanelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/progreso': typeof AuthenticatedProgresoRoute
+  '/admin/ejercicios': typeof AuthenticatedAdminEjerciciosRoute
+  '/admin/lecciones': typeof AuthenticatedAdminLeccionesRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
@@ -129,6 +147,8 @@ export interface FileRoutesById {
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_authenticated/progreso': typeof AuthenticatedProgresoRoute
+  '/_authenticated/admin/ejercicios': typeof AuthenticatedAdminEjerciciosRoute
+  '/_authenticated/admin/lecciones': typeof AuthenticatedAdminLeccionesRoute
   '/_authenticated/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/_authenticated/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/_authenticated/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
@@ -145,6 +165,8 @@ export interface FileRouteTypes {
     | '/panel'
     | '/perfil'
     | '/progreso'
+    | '/admin/ejercicios'
+    | '/admin/lecciones'
     | '/ejercicio/$exerciseId'
     | '/leccion/$lessonId'
     | '/reto/$exerciseId'
@@ -158,6 +180,8 @@ export interface FileRouteTypes {
     | '/panel'
     | '/perfil'
     | '/progreso'
+    | '/admin/ejercicios'
+    | '/admin/lecciones'
     | '/ejercicio/$exerciseId'
     | '/leccion/$lessonId'
     | '/reto/$exerciseId'
@@ -173,6 +197,8 @@ export interface FileRouteTypes {
     | '/_authenticated/panel'
     | '/_authenticated/perfil'
     | '/_authenticated/progreso'
+    | '/_authenticated/admin/ejercicios'
+    | '/_authenticated/admin/lecciones'
     | '/_authenticated/ejercicio/$exerciseId'
     | '/_authenticated/leccion/$lessonId'
     | '/_authenticated/reto/$exerciseId'
@@ -251,6 +277,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/ejercicios': {
+      id: '/_authenticated/admin/ejercicios'
+      path: '/ejercicios'
+      fullPath: '/admin/ejercicios'
+      preLoaderRoute: typeof AuthenticatedAdminEjerciciosRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/lecciones': {
+      id: '/_authenticated/admin/lecciones'
+      path: '/lecciones'
+      fullPath: '/admin/lecciones'
+      preLoaderRoute: typeof AuthenticatedAdminLeccionesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/ejercicio/$exerciseId': {
       id: '/_authenticated/ejercicio/$exerciseId'
       path: '/ejercicio/$exerciseId'
@@ -283,10 +323,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminEjerciciosRoute: typeof AuthenticatedAdminEjerciciosRoute
+  AuthenticatedAdminLeccionesRoute: typeof AuthenticatedAdminLeccionesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminEjerciciosRoute: AuthenticatedAdminEjerciciosRoute,
+  AuthenticatedAdminLeccionesRoute: AuthenticatedAdminLeccionesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
