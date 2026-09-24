@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
+import { Route as AuthenticatedEjercicioExerciseIdRouteImport } from './routes/_authenticated/ejercicio.$exerciseId'
 import { Route as AuthenticatedLeccionLessonIdRouteImport } from './routes/_authenticated/leccion.$lessonId'
 import { Route as AuthenticatedRutaCourseIdRouteImport } from './routes/_authenticated/ruta.$courseId'
 
@@ -35,6 +36,12 @@ const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
   path: '/panel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedEjercicioExerciseIdRoute =
+  AuthenticatedEjercicioExerciseIdRouteImport.update({
+    id: '/ejercicio/$exerciseId',
+    path: '/ejercicio/$exerciseId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedLeccionLessonIdRoute =
   AuthenticatedLeccionLessonIdRouteImport.update({
     id: '/leccion/$lessonId',
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
@@ -68,20 +77,34 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
+  '/_authenticated/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/_authenticated/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/_authenticated/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/panel' | '/leccion/$lessonId' | '/ruta/$courseId'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/panel'
+    | '/ejercicio/$exerciseId'
+    | '/leccion/$lessonId'
+    | '/ruta/$courseId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/panel' | '/leccion/$lessonId' | '/ruta/$courseId'
+  to:
+    | '/'
+    | '/auth'
+    | '/panel'
+    | '/ejercicio/$exerciseId'
+    | '/leccion/$lessonId'
+    | '/ruta/$courseId'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/panel'
+    | '/_authenticated/ejercicio/$exerciseId'
     | '/_authenticated/leccion/$lessonId'
     | '/_authenticated/ruta/$courseId'
   fileRoutesById: FileRoutesById
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ejercicio/$exerciseId': {
+      id: '/_authenticated/ejercicio/$exerciseId'
+      path: '/ejercicio/$exerciseId'
+      fullPath: '/ejercicio/$exerciseId'
+      preLoaderRoute: typeof AuthenticatedEjercicioExerciseIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/leccion/$lessonId': {
       id: '/_authenticated/leccion/$lessonId'
       path: '/leccion/$lessonId'
@@ -141,12 +171,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
+  AuthenticatedEjercicioExerciseIdRoute: typeof AuthenticatedEjercicioExerciseIdRoute
   AuthenticatedLeccionLessonIdRoute: typeof AuthenticatedLeccionLessonIdRoute
   AuthenticatedRutaCourseIdRoute: typeof AuthenticatedRutaCourseIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
+  AuthenticatedEjercicioExerciseIdRoute: AuthenticatedEjercicioExerciseIdRoute,
   AuthenticatedLeccionLessonIdRoute: AuthenticatedLeccionLessonIdRoute,
   AuthenticatedRutaCourseIdRoute: AuthenticatedRutaCourseIdRoute,
 }
