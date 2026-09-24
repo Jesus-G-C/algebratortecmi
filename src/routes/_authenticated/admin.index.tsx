@@ -19,8 +19,7 @@ type Metric = {
 async function fetchMetrics() {
   const { data, error } = await supabase.rpc("admin_metrics");
   if (error) throw error;
-  const rows = (data ?? []) as unknown as Metric[];
-  return rows[0] ?? null;
+  return (data ?? null) as unknown as Metric | null;
 }
 
 function AdminMetrics() {

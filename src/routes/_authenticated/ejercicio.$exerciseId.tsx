@@ -3,14 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 
 import { AppShell } from "@/components/AppShell";
 import { ExercisePlayer } from "@/components/ExercisePlayer";
-import { supabase } from "@/integrations/supabase/client";
-import { fetchLesson, fetchLessonExercises, type PublicExercise } from "@/lib/data";
+import { fetchExerciseDetail } from "@/lib/data";
 
 export const Route = createFileRoute("/_authenticated/ejercicio/$exerciseId")({
   head: () => ({
     meta: [
       { title: "Ejercicio — Algebrator" },
-      { name: "description", content: "Resuelve el ejercicio con asistencia progresiva y retroalimentación diagnóstica." },
+      {
+        name: "description",
+        content: "Resuelve el ejercicio con asistencia progresiva y retroalimentación diagnóstica.",
+      },
       { property: "og:title", content: "Ejercicio — Algebrator" },
       { property: "og:description", content: "Pistas graduales, nunca la respuesta." },
     ],
@@ -18,22 +20,12 @@ export const Route = createFileRoute("/_authenticated/ejercicio/$exerciseId")({
   component: ExerciseRoute,
 });
 
-async function loadExercise(exerciseId: string) {
-  const { data, error } = await supabase.from("exercises").select("lesson_id").eq("id", exerciseId).maybeSingle();
-  if (error) throw error;
-  if (!data) return null;
-  const list = await fetchLessonExercises(data.lesson_id);
-  const exercise = list.find((e) => e.id === exerciseId) ?? null;
-  const lesson = await fetchLesson(data.lesson_id);
-  return { exercise, lessonTitle: lesson?.title ?? "" } as {
-    exercise: PublicExercise | null;
-    lessonTitle: string;
-  };
-}
-
 function ExerciseRoute() {
   const { exerciseId } = Route.useParams();
-  const query = useQuery({ queryKey: ["exercise", exerciseId], queryFn: () => loadExercise(exerciseId) });
+  const query = useQuery({
+    queryKey: ["exercise", exerciseId],
+    queryFn: () => fetchExerciseDetail(exerciseId),
+  });
 
   return (
     <AppShell>
@@ -43,14 +35,12 @@ function ExerciseRoute() {
       <div className="mt-6">
         {query.isLoading ? (
           <p className="text-sm text-muted-foreground">Cargando ejercicio…</p>
-        ) : !query.data?.exercise ? (
+        ) : query.isError ? (
+          <p className="text-sm text-muted-foreground">No pudimos cargar este ejercicio. Intenta de nuevo.</p>
+        ) : !query.data ? (
           <p className="text-sm text-muted-foreground">No encontramos este ejercicio.</p>
         ) : (
-          <ExercisePlayer
-            exercise={query.data.exercise}
-            lessonTitle={query.data.lessonTitle}
-            independentMode={false}
-          />
+          <ExercisePlayer exercise={query.data} lessonTitle={query.data.lesson_title} independentMode={false} />
         )}
       </div>
     </AppShell>

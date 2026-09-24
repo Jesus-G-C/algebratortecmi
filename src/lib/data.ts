@@ -136,13 +136,20 @@ export async function submitAttempt(input: {
   mode: "practice" | "transfer" | "independent";
   reasoning?: string | null;
 }) {
-  const { data, error } = await supabase.rpc("submit_attempt", {
+  const args: {
+    p_exercise_id: string;
+    p_answer: string;
+    p_assistance: number;
+    p_mode: string;
+    p_reasoning?: string;
+  } = {
     p_exercise_id: input.exerciseId,
     p_answer: input.answer,
     p_assistance: input.assistance,
     p_mode: input.mode,
-    p_reasoning: input.reasoning ?? null,
-  });
+  };
+  if (input.reasoning) args.p_reasoning = input.reasoning;
+  const { data, error } = await supabase.rpc("submit_attempt", args);
   if (error) throw error;
   return data as unknown as AttemptResult;
 }
@@ -164,5 +171,14 @@ export async function fetchRetrieval() {
   const { data, error } = await supabase.rpc("retrieval_exercise");
   if (error) throw error;
   const rows = (data ?? []) as { id: string; lesson_id: string; title: string; problem: string; concept: string }[];
+  return rows[0] ?? null;
+}
+
+export type ExerciseDetail = PublicExercise & { lesson_title: string };
+
+export async function fetchExerciseDetail(exerciseId: string) {
+  const { data, error } = await supabase.rpc("exercise_detail", { p_exercise_id: exerciseId });
+  if (error) throw error;
+  const rows = (data ?? []) as unknown as ExerciseDetail[];
   return rows[0] ?? null;
 }
