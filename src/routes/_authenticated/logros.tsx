@@ -58,8 +58,9 @@ function AchievementsPage() {
                     a.earned_at ? "bg-accent text-primary-foreground" : "bg-secondary text-muted-foreground"
                   }`}
                 >
-                  ✓
+                  {a.earned_at ? "✓" : "—"}
                 </span>
+                <span className="sr-only">{a.earned_at ? "Logro obtenido" : "Logro pendiente"}</span>
                 <h3 className={`mt-4 text-lg font-bold ${a.earned_at ? "" : "text-muted-foreground"}`}>{a.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.description}</p>
                 <p className="mt-4 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
