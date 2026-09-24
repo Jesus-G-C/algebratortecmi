@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
+import { Route as AuthenticatedProgresoRouteImport } from './routes/_authenticated/progreso'
 import { Route as AuthenticatedEjercicioExerciseIdRouteImport } from './routes/_authenticated/ejercicio.$exerciseId'
 import { Route as AuthenticatedLeccionLessonIdRouteImport } from './routes/_authenticated/leccion.$lessonId'
 import { Route as AuthenticatedRetoExerciseIdRouteImport } from './routes/_authenticated/reto.$exerciseId'
@@ -35,6 +36,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
   id: '/panel',
   path: '/panel',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProgresoRoute = AuthenticatedProgresoRouteImport.update({
+  id: '/progreso',
+  path: '/progreso',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedEjercicioExerciseIdRoute =
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/progreso': typeof AuthenticatedProgresoRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/panel': typeof AuthenticatedPanelRoute
+  '/progreso': typeof AuthenticatedProgresoRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
+  '/_authenticated/progreso': typeof AuthenticatedProgresoRoute
   '/_authenticated/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/_authenticated/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
   '/_authenticated/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/panel'
+    | '/progreso'
     | '/ejercicio/$exerciseId'
     | '/leccion/$lessonId'
     | '/reto/$exerciseId'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/panel'
+    | '/progreso'
     | '/ejercicio/$exerciseId'
     | '/leccion/$lessonId'
     | '/reto/$exerciseId'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/panel'
+    | '/_authenticated/progreso'
     | '/_authenticated/ejercicio/$exerciseId'
     | '/_authenticated/leccion/$lessonId'
     | '/_authenticated/reto/$exerciseId'
@@ -158,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/progreso': {
+      id: '/_authenticated/progreso'
+      path: '/progreso'
+      fullPath: '/progreso'
+      preLoaderRoute: typeof AuthenticatedProgresoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ejercicio/$exerciseId': {
       id: '/_authenticated/ejercicio/$exerciseId'
       path: '/ejercicio/$exerciseId'
@@ -191,6 +210,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
+  AuthenticatedProgresoRoute: typeof AuthenticatedProgresoRoute
   AuthenticatedEjercicioExerciseIdRoute: typeof AuthenticatedEjercicioExerciseIdRoute
   AuthenticatedLeccionLessonIdRoute: typeof AuthenticatedLeccionLessonIdRoute
   AuthenticatedRetoExerciseIdRoute: typeof AuthenticatedRetoExerciseIdRoute
@@ -199,6 +219,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
+  AuthenticatedProgresoRoute: AuthenticatedProgresoRoute,
   AuthenticatedEjercicioExerciseIdRoute: AuthenticatedEjercicioExerciseIdRoute,
   AuthenticatedLeccionLessonIdRoute: AuthenticatedLeccionLessonIdRoute,
   AuthenticatedRetoExerciseIdRoute: AuthenticatedRetoExerciseIdRoute,
