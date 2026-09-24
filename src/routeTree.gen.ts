@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedLogrosRouteImport } from './routes/_authenticated/logros'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
 import { Route as AuthenticatedProgresoRouteImport } from './routes/_authenticated/progreso'
 import { Route as AuthenticatedEjercicioExerciseIdRouteImport } from './routes/_authenticated/ejercicio.$exerciseId'
@@ -32,6 +33,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedLogrosRoute = AuthenticatedLogrosRouteImport.update({
+  id: '/logros',
+  path: '/logros',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedPanelRoute = AuthenticatedPanelRouteImport.update({
   id: '/panel',
@@ -71,6 +77,7 @@ const AuthenticatedRutaCourseIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/logros': typeof AuthenticatedLogrosRoute
   '/panel': typeof AuthenticatedPanelRoute
   '/progreso': typeof AuthenticatedProgresoRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/logros': typeof AuthenticatedLogrosRoute
   '/panel': typeof AuthenticatedPanelRoute
   '/progreso': typeof AuthenticatedProgresoRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/logros': typeof AuthenticatedLogrosRoute
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
   '/_authenticated/progreso': typeof AuthenticatedProgresoRoute
   '/_authenticated/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/logros'
     | '/panel'
     | '/progreso'
     | '/ejercicio/$exerciseId'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/logros'
     | '/panel'
     | '/progreso'
     | '/ejercicio/$exerciseId'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/logros'
     | '/_authenticated/panel'
     | '/_authenticated/progreso'
     | '/_authenticated/ejercicio/$exerciseId'
@@ -162,6 +174,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/logros': {
+      id: '/_authenticated/logros'
+      path: '/logros'
+      fullPath: '/logros'
+      preLoaderRoute: typeof AuthenticatedLogrosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/panel': {
       id: '/_authenticated/panel'
@@ -209,6 +228,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedLogrosRoute: typeof AuthenticatedLogrosRoute
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
   AuthenticatedProgresoRoute: typeof AuthenticatedProgresoRoute
   AuthenticatedEjercicioExerciseIdRoute: typeof AuthenticatedEjercicioExerciseIdRoute
@@ -218,6 +238,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedLogrosRoute: AuthenticatedLogrosRoute,
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
   AuthenticatedProgresoRoute: AuthenticatedProgresoRoute,
   AuthenticatedEjercicioExerciseIdRoute: AuthenticatedEjercicioExerciseIdRoute,
