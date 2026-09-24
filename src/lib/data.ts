@@ -173,3 +173,12 @@ export async function fetchRetrieval() {
   const rows = (data ?? []) as { id: string; lesson_id: string; title: string; problem: string; concept: string }[];
   return rows[0] ?? null;
 }
+
+export type ExerciseDetail = PublicExercise & { lesson_title: string };
+
+export async function fetchExerciseDetail(exerciseId: string) {
+  const { data, error } = await supabase.rpc("exercise_detail", { p_exercise_id: exerciseId });
+  if (error) throw error;
+  const rows = (data ?? []) as unknown as ExerciseDetail[];
+  return rows[0] ?? null;
+}
