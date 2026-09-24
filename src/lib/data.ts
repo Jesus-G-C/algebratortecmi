@@ -141,7 +141,7 @@ export async function submitAttempt(input: {
     p_answer: input.answer,
     p_assistance: input.assistance,
     p_mode: input.mode,
-    p_reasoning: input.reasoning ?? null,
+    p_reasoning: input.reasoning ?? undefined,
   });
   if (error) throw error;
   return data as unknown as AttemptResult;
