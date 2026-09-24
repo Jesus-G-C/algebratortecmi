@@ -342,6 +342,25 @@ export type Database = {
     }
     Functions: {
       admin_metrics: { Args: never; Returns: Json }
+      exercise_detail: {
+        Args: { p_exercise_id: string }
+        Returns: {
+          ask_reasoning: boolean
+          concept: string
+          difficulty: string
+          equation: string
+          hints: string[]
+          id: string
+          independent: boolean
+          lesson_id: string
+          lesson_title: string
+          order_index: number
+          problem: string
+          title: string
+          transfer_problem: string
+          xp: number
+        }[]
+      }
       grant_achievement: {
         Args: { _code: string; _user_id: string }
         Returns: undefined

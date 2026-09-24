@@ -22,6 +22,13 @@
       "when": 1790288122065,
       "tag": "0002_algebrator_seed_content",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790288902659,
+      "tag": "0003_exercise_detail_reader",
+      "breakpoints": true
     }
   ]
 }
