@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedPanelRouteImport } from './routes/_authenticated/panel'
 import { Route as AuthenticatedEjercicioExerciseIdRouteImport } from './routes/_authenticated/ejercicio.$exerciseId'
 import { Route as AuthenticatedLeccionLessonIdRouteImport } from './routes/_authenticated/leccion.$lessonId'
+import { Route as AuthenticatedRetoExerciseIdRouteImport } from './routes/_authenticated/reto.$exerciseId'
 import { Route as AuthenticatedRutaCourseIdRouteImport } from './routes/_authenticated/ruta.$courseId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -48,6 +49,12 @@ const AuthenticatedLeccionLessonIdRoute =
     path: '/leccion/$lessonId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRetoExerciseIdRoute =
+  AuthenticatedRetoExerciseIdRouteImport.update({
+    id: '/reto/$exerciseId',
+    path: '/reto/$exerciseId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRutaCourseIdRoute =
   AuthenticatedRutaCourseIdRouteImport.update({
     id: '/ruta/$courseId',
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/panel': typeof AuthenticatedPanelRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
+  '/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
   '/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +77,7 @@ export interface FileRoutesByTo {
   '/panel': typeof AuthenticatedPanelRoute
   '/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
+  '/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
   '/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRoutesById {
@@ -79,6 +88,7 @@ export interface FileRoutesById {
   '/_authenticated/panel': typeof AuthenticatedPanelRoute
   '/_authenticated/ejercicio/$exerciseId': typeof AuthenticatedEjercicioExerciseIdRoute
   '/_authenticated/leccion/$lessonId': typeof AuthenticatedLeccionLessonIdRoute
+  '/_authenticated/reto/$exerciseId': typeof AuthenticatedRetoExerciseIdRoute
   '/_authenticated/ruta/$courseId': typeof AuthenticatedRutaCourseIdRoute
 }
 export interface FileRouteTypes {
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/ejercicio/$exerciseId'
     | '/leccion/$lessonId'
+    | '/reto/$exerciseId'
     | '/ruta/$courseId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/panel'
     | '/ejercicio/$exerciseId'
     | '/leccion/$lessonId'
+    | '/reto/$exerciseId'
     | '/ruta/$courseId'
   id:
     | '__root__'
@@ -106,6 +118,7 @@ export interface FileRouteTypes {
     | '/_authenticated/panel'
     | '/_authenticated/ejercicio/$exerciseId'
     | '/_authenticated/leccion/$lessonId'
+    | '/_authenticated/reto/$exerciseId'
     | '/_authenticated/ruta/$courseId'
   fileRoutesById: FileRoutesById
 }
@@ -159,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeccionLessonIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reto/$exerciseId': {
+      id: '/_authenticated/reto/$exerciseId'
+      path: '/reto/$exerciseId'
+      fullPath: '/reto/$exerciseId'
+      preLoaderRoute: typeof AuthenticatedRetoExerciseIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/ruta/$courseId': {
       id: '/_authenticated/ruta/$courseId'
       path: '/ruta/$courseId'
@@ -173,6 +193,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPanelRoute: typeof AuthenticatedPanelRoute
   AuthenticatedEjercicioExerciseIdRoute: typeof AuthenticatedEjercicioExerciseIdRoute
   AuthenticatedLeccionLessonIdRoute: typeof AuthenticatedLeccionLessonIdRoute
+  AuthenticatedRetoExerciseIdRoute: typeof AuthenticatedRetoExerciseIdRoute
   AuthenticatedRutaCourseIdRoute: typeof AuthenticatedRutaCourseIdRoute
 }
 
@@ -180,6 +201,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPanelRoute: AuthenticatedPanelRoute,
   AuthenticatedEjercicioExerciseIdRoute: AuthenticatedEjercicioExerciseIdRoute,
   AuthenticatedLeccionLessonIdRoute: AuthenticatedLeccionLessonIdRoute,
+  AuthenticatedRetoExerciseIdRoute: AuthenticatedRetoExerciseIdRoute,
   AuthenticatedRutaCourseIdRoute: AuthenticatedRutaCourseIdRoute,
 }
 
